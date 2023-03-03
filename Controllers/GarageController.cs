@@ -24,8 +24,8 @@ namespace BikeGarageAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Garage>> GetSingleGarage(int id)
         {
-            var hero = garages.Find(x => x.Id == id);   
-            return hero!= null ? Ok(hero): NotFound("Garage not found!");
+            var garage = garages.Find(x => x.Id == id);   
+            return garage != null ? Ok(garage) : NotFound("Garage not found!");
         }
 
 
@@ -34,6 +34,27 @@ namespace BikeGarageAPI.Controllers
         {
             garages.Add(garage);
             return Ok(garages);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Garage>> UpdateGarage(int id, Garage request)
+        {
+            var garage = garages.Find(x => x.Id == id);
+            if (garage != null)
+            {
+                garage.Name = request.Name;
+                garage.Description = request.Description;
+                garage.Location = request.Location;
+                garage.Description = request.Description.ToString();
+                garage.Country = request.Country;
+
+                return Ok(garage);
+            }
+            else
+            {
+                return NotFound("Garage not found!");
+            }
+
         }
 
 
